@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        body{
+            background-image: linear-gradient(rgb(237, 174, 237),rgb(106, 197, 222));
+            height: 100svh;
+            width: 100svw;
+            
+        }
+        .h1{
+            display: flex;
+            font-size: 3em;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10%;
+        }
+        #turn{
+            display: flex;
+            background-color: black;
+            color: white;
+            height: 5%;
+            font-size: 1.7em;
+            align-items: center;
+            justify-content: center;
+            text-transform: capitalize;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+        }
+        #q{
+            display: flex;
+            height: 15svw;
+            width: 70svw;
+            border-radius: 10px;
+            background-color: rgb(248, 244, 175);
+            margin:10% auto;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7em;
+            box-shadow: 1px 1px 8px black;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+        #a{
+            display: flex;
+            height: 15svw;
+            width: 70svw;
+            background-color: rgb(127, 241, 134);
+            margin: auto;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 1px 1px 8px black;
+            border-radius: 10px;
+        }
+
+        #a input{
+            height: 100%;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 1.7em;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .but{
+            display: flex;
+            height: 15svw;
+            width: 70svw;
+            margin:10% auto;
+         
+        }
+        .but button{
+            width: 50%;
+            margin:0 6% ;
+            font-size: 1.4em;
+            border-radius: 10px;
+            background-image: linear-gradient(rgb(143, 143, 242),rgb(218, 99, 218));
+        }
+
+        .but button:hover{
+            box-shadow: 1px 1px 8px black;
+        }
+
+        #photo{
+            height: 35%;
+            width: 60%;
+            margin: auto;
+            background-image: url("unknown.jpeg");
+            background-size: cover;
+            background-position: center;
+            border: 3px solid yellow;
+
+        }
+
+        #end{
+            height: 4%;
+            width: 20%;
+            font-size: 1.6em;
+            margin:1% auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: cursive;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div id="turn">player x's turn</div>
+    <div class="h1">
+        Guess the word?
+    </div>
+    <div id="q">
+        question
+    </div>
+    <section>
+        <div id="a"><input type="text" placeholder="Enter answer" id="ans"></div>
+        <div class="but">
+             <button type="submit" onclick="anschec()">Check</button>
+        <button type="reset" onclick="erase()">Erase</button>
+        </div>
+       
+    </section>
+<div id="photo"></div>
+
+<button id="end" onclick="end()">End</button>
+
+<script>
+    let q=document.getElementById("q");
+    let photo=document.getElementById("photo");
+    let ans=document.getElementById("ans");
+    let turn=document.getElementById("turn");
+    var qc=Math.floor(Math.random() * 100);
+    var ppoint=[0,0];
+    var pname=["Aaryan","Pradeep"]
+    var mark=10;
+    var flag=0;
+
+
+    let questions=['abomination','adam-warlock','ancient-one','antman','black-panther','black-widow','bruce-banner','bucky','captain-america',
+    'captain-marvel','celestials','centennial','clint-barton','daredevil','deadpool','doctor-octo-octavius','doctor-strange',
+    'doctor-octopus','dormammu','drax','electro','falcon','gamora','greengoblin','groot','gwenstacy','hankpym','hawkeye',
+    'hela','high-evolutionary','hulk','hydra','illuminati','iron-man','iron-heart','jane-foster','kang','killmonger','korg',
+    'kree','lizard','logan','mantis','maryjane','america-chavez','nakia','namor','nick-fury','norman-osborn','okoye',
+    'peggy-carter','captain-carter','pepper-potts','peter-parker','quick-silver','rocket-racoon','ronan','shield',
+    'scarlet-witch','shang-chi','she-hulk','skaar','skrulls','spide-rman','star-lord','peter-quill','odin','asgard',
+    'midguard','tchalla','thanos','thor','tony-stark','ultron','valkyrie','victor-vondoom','vulture','war-machiene','wasp',
+    'whiplash','wolverine','wong','yondu','natasha-romanoff','frost-giants','steve-rogers','loki','elves','mighty-thor',
+    'scott-lang','doctor-stephen-strange','jarvis','ms-marvel','mysterio','vision','heimdall']
+    var bit=shuffleWord(questions[qc])
+    q.innerHTML=bit;
+    turn.innerHTML=pname[flag]+"'s turn";
+    function nextq()
+
+    {
+       mark=10;
+       qc++;
+       var bit=shuffleWord(questions[qc])
+       q.innerHTML=bit;
+    }
+
+    function shuffleWord(word) {
+        // Convert the word to an array of characters
+        const characters = word.split('');
+        
+        // Shuffle the array of characters
+        for (let i = characters.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [characters[i], characters[j]] = [characters[j], characters[i]];
+        }
+        
+        // Join the shuffled characters back into a word
+        const shuffledWord = characters.join('');
+        
+        return shuffledWord;
+      }
+
+      function anschec()
+      {
+           var temp=ans.value;
+           if(temp==questions[qc] || mark==0)
+            {
+                ppoint[flag]+=mark;
+                ans.style.boxShadow="1px 1px 8px black"
+                nextq();
+            }
+            else{
+                mark-=5
+                ans.style.boxShadow="1px 1px 8px red";
+            }
+           
+
+            if(flag==0)
+            {
+                flag++
+                turn.innerHTML=pname[flag]+"'s turn";
+            }
+            else{
+                flag--
+                turn.innerHTML=pname[flag]+"'s turn";
+            }
+
+            
+      }
+
+      function erase()
+      {
+        ans.value="";
+      }
+
+
+      end=()=>{
+       alert(pname[0]+" = "+ppoint[0]+"\n"+pname[1]+" = "+ppoint[1])
+      }
+
+</script>
+</body>
+</html>
