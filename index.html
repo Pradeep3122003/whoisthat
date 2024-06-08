@@ -16,12 +16,14 @@
             width: 100svw;
             
         }
-        .h1{
+      
+        .he1{
             display: flex;
-            font-size: 3em;
+            font-size: 1.7em;
             align-items: center;
             justify-content: center;
-            margin-top: 10%;
+            margin-top: 6%;
+            text-shadow: 1px 1px 3px rgb(72, 37, 177);
         }
         #turn{
             display: flex;
@@ -89,7 +91,7 @@
         }
 
         #photo{
-            height: 35%;
+            height: 33%;
             width: 60%;
             margin: auto;
             background-image: url("unknown.jpeg");
@@ -101,26 +103,117 @@
 
         #end{
             height: 4%;
-            width: 20%;
+            width: 30%;
             font-size: 1.6em;
             margin:1% auto;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: cursive;
+            border-radius: 10px;
+            color: white;
+            background-image: linear-gradient(30deg,red,blue);
         }
         
+       #score{
+        height: 50svh;
+        width: 100svw;
+        background-color: rgb(39, 40, 41);
+        position:absolute ;
+        margin: 25svh 0svw;
+        display: none;
+        align-items: center;
+        justify-content: center;
+       }
+       .fp{
+        height: 35%;
+        width: 33%;
+        background-color: gold;
+        margin:0px 3%;
+        box-shadow: 0px 0px 10px gold;
+        border: 1px solid black;
+       }
 
+       .sp{
+        height: 35%;
+        width: 33%;
+        background-color: silver;
+        box-shadow: 0px 0px 10px silver;
+        border: 1px solid black;
+       }
+
+       .sp, .fp{
+        text-align: center;
+        font-size: 3em;
+       }
+       .dname{
+        height: 30%;
+        width: 100%;
+        border-radius: 10px;
+       font-size: 0.5em;
+       font-weight: 700;
+       font-family: cursive;
+       }
+
+       #intake{
+        height: 50svh;
+        width: 100svw;
+        background-image: linear-gradient(blue,purple);
+        position:absolute ;
+        margin: 25svh 0svw;
+       z-index: 3;
+        border-radius: 20px;
+       }
+       #pi1, #pi2{
+        display: block;
+        height: 20%;
+        width: 70%;
+        margin: 10% auto;
+        text-align: center;
+        font-size: 1.7em;
+        border-radius: 10px;
+       }
+
+       #intake button{
+        display: block;
+        height: 10%;
+        width: 30%;
+        margin: 0% auto;
+        font-size: 1.5em;
+        border-radius: 10px;
+       }
+
+       #blur{
+        display: none;
+       height: 100%;
+       width: 100%;
+       z-index: -2;
+       }
     </style>
 </head>
 <body>
+    <div id="intake">
+
+        <input type="text" id="pi1" placeholder="player 1">
+        <input type="text" id="pi2" placeholder="player 2">
+        <button onclick="start()" >Start</button>
+    </div>
+    <section id="blur">
+
+    
+    <div id="score">
+        
+    <div class="fp"><div class="dname" id="fir">Player1</div>🏆</div>
+    <div class="sp"><div class="dname" id="sec">Player2</div>🥈</div>
+    </div>
     <div id="turn">player x's turn</div>
-    <div class="h1">
-        Guess the word?
+    <div class="he1" >
+        Guess the Marvel Character?
     </div>
     <div id="q">
         question
     </div>
+    
     <section>
         <div id="a"><input type="text" placeholder="Enter answer" id="ans"></div>
         <div class="but">
@@ -131,16 +224,39 @@
     </section>
 <div id="photo"></div>
 
-<button id="end" onclick="end()">End</button>
-
+<button id="end" onclick="end()" >End</button>
+</section>
 <script>
     let q=document.getElementById("q");
     let photo=document.getElementById("photo");
     let ans=document.getElementById("ans");
     let turn=document.getElementById("turn");
+    let score=document.getElementById("score");
+    let fir=document.getElementById("fir");
+    let pi1=document.getElementById("pi1");
+    let sec=document.getElementById("sec");
+    let pi2=document.getElementById("pi2");
+    let intake=document.getElementById("intake");
+    let blur=document.getElementById("blur");
+    
     var qc=Math.floor(Math.random() * 100);
     var ppoint=[0,0];
-    var pname=["Aaryan","Pradeep"]
+    var pname=["Player 1","Player 2"]
+    start=()=>{
+      pname[0]=pi1.value;
+      pname[1]=pi2.value;
+      if(pname[0]!="" || pname[1]!="")
+      {
+         intake.style.display="none";
+         blur.style.display="block";
+      }
+     
+      turn.innerHTML=pname[flag]+"'s turn";
+     
+        
+     
+    }
+    
     var mark=10;
     var flag=0;
 
@@ -157,7 +273,7 @@
     'scott-lang','doctor-stephen-strange','jarvis','ms-marvel','mysterio','vision','heimdall']
     var bit=shuffleWord(questions[qc])
     q.innerHTML=bit;
-    turn.innerHTML=pname[flag]+"'s turn";
+    
     function nextq()
 
     {
@@ -218,7 +334,18 @@
 
 
       end=()=>{
-       alert(pname[0]+" = "+ppoint[0]+"\n"+pname[1]+" = "+ppoint[1])
+       if(ppoint[0]>ppoint[1])
+       {
+          fir.innerHTML=pname[0];
+          sec.innerHTML=pname[1];
+       }
+       else
+       {
+        fir.innerHTML=pname[1];
+        sec.innerHTML=pname[0];
+       }
+
+       score.style.display="flex";
       }
 
 </script>
